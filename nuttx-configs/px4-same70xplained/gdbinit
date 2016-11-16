@@ -1,0 +1,5 @@
+target remote localhost:3333
+symbol-file nuttx
+monitor reset
+monitor halt
+load nuttx
