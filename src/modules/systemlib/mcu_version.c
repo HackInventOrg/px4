@@ -102,6 +102,7 @@ int mcu_version(char *rev, char **revstr)
 
 	switch (chip_version) {
 
+#if defined(CONFIG_ARCH_CHIP_STM32) || defined(CONFIG_ARCH_CHIP_STM32F7)
 	case STM32F74xxx_75xxx:
 		*revstr = "STM32F74xxx";
 		break;
@@ -133,14 +134,19 @@ int mcu_version(char *rev, char **revstr)
 	case STM32F103_CON:
 		*revstr = "STM32F1xx Con";
 		break;
-
 	default:
 		*revstr = "STM32F???";
 		break;
+#else
+	default:
+		*revstr = "ARM-UNKNOWN???";
+		break;
+#endif
 	}
 
 	switch (revid) {
 
+#if defined(CONFIG_ARCH_CHIP_STM32) || defined(CONFIG_ARCH_CHIP_STM32F7)
 	case MCU_REV_STM32F4_REV_A:
 		*rev = 'A';
 		break;
@@ -160,7 +166,7 @@ int mcu_version(char *rev, char **revstr)
 	case MCU_REV_STM32F4_REV_3:
 		*rev = '3';
 		break;
-
+#endif
 	default:
 		// todo add rev for 103 - if needed
 		*rev = '?';
