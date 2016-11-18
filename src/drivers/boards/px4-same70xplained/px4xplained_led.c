@@ -60,6 +60,19 @@ extern void led_off(int led);
 extern void led_toggle(int led);
 __END_DECLS
 
+static int samv7_configgpio(uint32_t cfgset)
+{
+    return OK;
+}
+
+
+static bool samv7_gpioread(uint32_t pinset)
+{
+return OK;
+}
+
+static void samv7_gpiowrite(uint32_t pinset, bool value){}
+
 __EXPORT void board_autoled_initialize(void)
 {
 	/* Configure LED1 GPIO for output */

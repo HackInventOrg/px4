@@ -57,13 +57,68 @@
 
 #include <arch/board/board.h>
 #include <drivers/drv_pwm_output.h>
+#include <drivers/drv_hrt.h>
 
-#include "drv_io_timer.h"
+typedef enum io_timer_channel_mode_t {
+	IOTimerChanMode_NotUsed = 0,
+	IOTimerChanMode_PWMOut  = 1,
+	IOTimerChanMode_PWMIn   = 2,
+	IOTimerChanMode_Capture = 3,
+	IOTimerChanModeSize
+} io_timer_channel_mode_t;
 
+/* array of timers dedicated to PWM in and out and capture use */
+typedef struct io_timers_t {
+	uint32_t	base;
+	uint32_t	clock_register;
+	uint32_t	clock_bit;
+	uint32_t	clock_freq;
+	uint32_t	vectorno;
+	uint32_t    first_channel_index;
+	uint32_t    last_channel_index;
+	xcpt_t      handler;
+} io_timers_t;
+
+/* array of channels in logical order */
+typedef struct timer_io_channels_t {
+	uint32_t	gpio_out;
+	uint32_t	gpio_in;
+	uint8_t		timer_index;
+	uint8_t		timer_channel;
+	uint16_t	masks;
+	uint8_t		ccr_offset;
+} timer_io_channels_t;
+
+
+
+typedef uint8_t io_timer_channel_allocation_t; /* big enough to hold MAX_TIMER_IO_CHANNELS */
+typedef void (*channel_handler_t)(void *context, const io_timers_t *timer, uint32_t chan_index,
+				  const timer_io_channels_t *chan,
+				  hrt_abstime isrs_time , uint16_t isrs_rcnt);
+
+#if 0
 //												 				  NotUsed   PWMOut  PWMIn Capture
 io_timer_channel_allocation_t channel_allocations[IOTimerChanModeSize] = { UINT8_MAX,   0  ,  0   ,  0 };
-
 typedef uint8_t io_timer_allocation_t; /* big enough to hold MAX_IO_TIMERS */
+#endif
+int io_timer_handler0(int irq, void *context);
+int io_timer_handler1(int irq, void *context);
+int io_timer_handler2(int irq, void *context);
+int io_timer_handler3(int irq, void *context);
+int io_timer_is_channel_free(unsigned channel);
+int io_timer_validate_channel_index(unsigned channel);
+int io_timer_get_mode_channels(io_timer_channel_mode_t mode);
+int io_timer_get_channel_mode(unsigned channel);
+int io_timer_free_channel(unsigned channel);
+int io_timer_init_timer(unsigned timer);
+int io_timer_set_rate(unsigned timer, unsigned rate);
+int io_timer_set_enable(bool state, io_timer_channel_mode_t mode, io_timer_channel_allocation_t masks);
+int io_timer_set_ccr(unsigned channel, uint16_t value);
+uint16_t io_channel_get_ccr(unsigned channel);
+uint32_t io_timer_get_group(unsigned timer);
+int io_timer_channel_init(unsigned channel, io_timer_channel_mode_t mode,
+			  channel_handler_t channel_handler, void *context);
+
 
 int io_timer_handler0(int irq, void *context)
 {

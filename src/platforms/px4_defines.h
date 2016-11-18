@@ -39,6 +39,12 @@
 
 #pragma once
 
+#ifdef __cplusplus
+#include <cwchar>
+#else
+#include <wchar.h>
+#endif
+
 #include <px4_log.h>
 #include <math.h>
 
@@ -116,6 +122,10 @@ typedef param_t px4_param_t;
 #if !defined(offsetof)
 #  define offsetof(TYPE, MEMBER) __builtin_offsetof (TYPE, MEMBER)
 #endif
+/* FIXME - Used to satisfy build */
+
+#define getreg32(a)    (*(volatile uint32_t *)(a))
+
 
 /*
  * POSIX Specific defines
@@ -133,9 +143,6 @@ typedef param_t px4_param_t;
 
 // NuttX _IOC is equivalent to Linux _IO
 #define _PX4_IOC(x,y) _IO(x,y)
-
-/* FIXME - Used to satisfy build */
-#define getreg32(a)    (*(volatile uint32_t *)(a))
 
 #ifdef __PX4_QURT
 #define PX4_TICKS_PER_SEC 1000L

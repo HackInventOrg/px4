@@ -63,14 +63,28 @@
 # define STM32F103_CON      0x418
 
 #endif
+#define SAMV7_SYSMEM_UID 0x11111111
+#define SAMV7_DEBUGMCU_BASE 0x2222222
+
+#if 1
+#define _SYSMEM_UID SAMV7_SYSMEM_UID
+#define _DEBUGMCU_BASE SAMV7_DEBUGMCU_BASE
+# define DEVID_MASK    0xFFF
+# define REVID_MASK    0xFFFF0000
+
+
+#else
+#define _SYSMEM_UID STM32_SYSMEM_UID
+$define  _DEBUGMCU_BASE STM32_DEBUGMCU_BASE
+#endif
 
 /** Copy the 96bit MCU Unique ID into the provided pointer */
 void mcu_unique_id(uint32_t *uid_96_bit)
 {
 #ifdef __PX4_NUTTX
-	uid_96_bit[0] = getreg32(STM32_SYSMEM_UID);
-	uid_96_bit[1] = getreg32(STM32_SYSMEM_UID + 4);
-	uid_96_bit[2] = getreg32(STM32_SYSMEM_UID + 8);
+	uid_96_bit[0] = getreg32(_SYSMEM_UID);
+	uid_96_bit[1] = getreg32(_SYSMEM_UID + 4);
+	uid_96_bit[2] = getreg32(_SYSMEM_UID + 8);
 #else
 	uid_96_bit[0] = 0;
 	uid_96_bit[1] = 1;
@@ -81,7 +95,7 @@ void mcu_unique_id(uint32_t *uid_96_bit)
 int mcu_version(char *rev, char **revstr)
 {
 #ifdef __PX4_NUTTX
-	uint32_t abc = getreg32(STM32_DEBUGMCU_BASE);
+	uint32_t abc = getreg32(_DEBUGMCU_BASE);
 
 	int32_t chip_version = abc & DEVID_MASK;
 	enum MCU_REV revid = (abc & REVID_MASK) >> 16;

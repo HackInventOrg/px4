@@ -52,7 +52,7 @@ __BEGIN_DECLS
 /* these headers are not C++ safe */
 //#include <samv7.h>
 #include <arch/board/board.h>
-
+#include <sam_gpio.h>
 /****************************************************************************************************
  * Definitions
  ****************************************************************************************************/
@@ -61,8 +61,10 @@ __BEGIN_DECLS
 /* PX4-SAME70XPLAINED GPIOs ***********************************************************************************/
 /* LEDs */
 // LED1 green, LED2 orange, LED3 red, LED4 blue
-
-
+#define GPIO_SPEED_SHIFT              (10)  
+#  define GPIO_PORTD               (3 << GPIO_PORT_SHIFT) 
+#  define GPIO_SPEED_50MHz            (2 << GPIO_SPEED_SHIFT)     /* 50 MHz Fast speed output  */
+#define GPIO_PUSHPULL (0)
 #define GPIO_LED1       (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_50MHz|\
 			 GPIO_OUTPUT_CLEAR|GPIO_PORTD|GPIO_PIN12)
 #define GPIO_LED2       (GPIO_OUTPUT|GPIO_PUSHPULL|GPIO_SPEED_50MHz|\

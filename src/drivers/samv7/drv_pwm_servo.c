@@ -58,8 +58,25 @@
 #include <arch/board/board.h>
 #include <drivers/drv_pwm_output.h>
 
-#include "drv_io_timer.h"
-#include "drv_pwm_servo.h"
+typedef enum io_timer_channel_mode_t {
+	IOTimerChanMode_NotUsed = 0,
+	IOTimerChanMode_PWMOut  = 1,
+	IOTimerChanMode_PWMIn   = 2,
+	IOTimerChanMode_Capture = 3,
+	IOTimerChanModeSize
+} io_timer_channel_mode_t;
+
+typedef uint8_t io_timer_channel_allocation_t; /* big enough to hold MAX_TIMER_IO_CHANNELS */
+#define IO_TIMER_ALL_MODES_CHANNELS 0
+
+//#include "drv_io_timer.h"
+//#include "drv_pwm_servo.h"
+extern int io_timer_set_rate(unsigned timer, unsigned rate);
+extern int io_timer_set_ccr(unsigned channel, uint16_t value);
+extern uint16_t io_channel_get_ccr(unsigned channel);
+extern uint32_t io_timer_get_group(unsigned timer);
+extern int io_timer_set_enable(bool state, io_timer_channel_mode_t mode,
+				 io_timer_channel_allocation_t masks);
 
 int up_pwm_servo_set(unsigned channel, servo_position_t value)
 {

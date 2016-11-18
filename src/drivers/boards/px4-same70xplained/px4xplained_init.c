@@ -112,6 +112,7 @@
  *   and mapped but before any devices have been initialized.
  *
  ************************************************************************************/
+void samv7_boardinitialize(void);
 
 __EXPORT void
 samv7_boardinitialize(void)
@@ -145,6 +146,9 @@ samv7_boardinitialize(void)
  *
  ****************************************************************************/
 
+static void samv7_serial_dma_poll(void){}
+
+int board_app_initialize(uintptr_t arg);
 __EXPORT int board_app_initialize(uintptr_t arg)
 {
 
@@ -190,6 +194,7 @@ __EXPORT int board_app_initialize(uintptr_t arg)
 	return OK;
 }
 
+void board_crashdump(uintptr_t currentsp, FAR void *tcb, FAR const uint8_t *filename, int lineno);
 __EXPORT void board_crashdump(uintptr_t currentsp, FAR void *tcb, FAR const uint8_t *filename, int lineno)
 {
 }

@@ -44,6 +44,7 @@
 #define VECTOR_HPP
 
 #include <stdio.h>
+#include <cwchar>
 #include <math.h>
 #include <string.h>
 

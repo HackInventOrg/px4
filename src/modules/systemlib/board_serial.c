@@ -44,9 +44,17 @@
 #include "board_config.h"
 #include "board_serial.h"
 
+#define SAMV7_SYSMEM_UID 0x11111111
+
+#if 1
+#define _SYSMEM_UID SAMV7_SYSMEM_UID
+#else
+#define _SYSMEM_UID STM32_SYSMEM_UID
+#endif
+
 int get_board_serial(uint8_t *serialid)
 {
-	const volatile uint32_t *udid_ptr = (const uint32_t *)STM32_SYSMEM_UID;
+	const volatile uint32_t *udid_ptr = (const uint32_t *)_SYSMEM_UID;
 	union udid id;
 	val_read((uint32_t *)&id, udid_ptr, sizeof(id));
 

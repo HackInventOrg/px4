@@ -59,6 +59,8 @@
 #include <drivers/drv_pwm_output.h>
 
 #include <board_config.h>
+#if defined(BOARD_HAS_LED_PWM)
+
 
 int led_pwm_servo_set(unsigned channel, uint8_t  value);
 unsigned led_pwm_servo_get(unsigned channel);

@@ -74,6 +74,8 @@
  *   Called to setup USB-related GPIO pins for the PX4-same70xplained board.
  *
  ************************************************************************************/
+void samv7_usbsuspend(FAR struct usbdev_s *dev, bool resume);
+void samv7_usbinitialize(void);
 
 __EXPORT void samv7_usbinitialize(void)
 {

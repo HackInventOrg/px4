@@ -65,6 +65,12 @@ __BEGIN_DECLS
 #    define px4_arch_gpioread(pinset)               stm32_gpioread(pinset)
 #    define px4_arch_gpiowrite(pinset, value)       stm32_gpiowrite(pinset, value)
 #    define px4_arch_gpiosetevent(pinset,r,f,e,fp)  stm32_gpiosetevent(pinset,r,f, e,fp)
+#  else
+#    include <sam_twihs.h>
+#    include <sam_spi.h>
+#    define px4_i2cbus_initialize(bus_num_1based)    sam_i2cbus_initialize(bus_num_1based)
+#    define px4_i2cbus_uninitialize(pdev)            sam_i2cbus_uninitialize(pdev)
+#    define px4_spibus_initialize(port_1based)       sam_spibus_initialize(port_1based)
 #  endif
 __END_DECLS
 #endif

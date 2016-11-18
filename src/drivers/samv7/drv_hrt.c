@@ -71,6 +71,24 @@
 
 #ifdef HRT_TIMER
 
+/*
+ * Queue of callout entries.
+ */
+static struct sq_queue_s	callout_queue;
+#if 0
+/* latency baseline (last compare value applied) */
+static uint16_t			latency_baseline;
+
+/* timer count at interrupt (for latency purposes) */
+static uint16_t			latency_actual;
+
+/* latency histogram */
+#define LATENCY_BUCKET_COUNT 8
+__EXPORT const uint16_t latency_bucket_count = LATENCY_BUCKET_COUNT;
+__EXPORT const uint16_t	latency_buckets[LATENCY_BUCKET_COUNT] = { 1, 2, 5, 10, 20, 50, 100, 1000 };
+__EXPORT uint32_t		latency_counters[LATENCY_BUCKET_COUNT + 1];
+#endif
+
 
 /**
  * Fetch a never-wrapping absolute time value in microseconds from
@@ -81,7 +99,7 @@ hrt_absolute_time(void)
 {
 	hrt_abstime	abstime;
 
-	flags = px4_enter_critical_section();
+	irqstate_t flags = px4_enter_critical_section();
         abstime = 0;
 	px4_leave_critical_section(flags);
 

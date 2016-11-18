@@ -47,7 +47,7 @@
 
 #include <px4_config.h>
 #include <nuttx/arch.h>
-#include <stm32_spi.h>
+//#include <stm32_spi.h>
 #include "spi.h"
 
 #ifndef CONFIG_SPI_EXCHANGE

@@ -73,6 +73,8 @@
 #include <arch/board/board.h>
 #include <drivers/drv_input_capture.h>
 
+extern int io_timer_validate_channel_index(unsigned channel);
+
 int up_input_capture_set(unsigned channel, input_capture_edge edge, capture_filter_t filter,
 			 capture_callback_t callback, void *context)
 {
