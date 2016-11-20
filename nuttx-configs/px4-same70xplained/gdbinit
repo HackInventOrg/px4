@@ -1,5 +1,5 @@
 target remote localhost:3333
-symbol-file nuttx
+symbol-file build_px4-same70xplained_default/src/firmware/nuttx/firmware_nuttx 
 monitor reset
 monitor halt
-load nuttx
+load build_px4-same70xplained_default/src/firmware/nuttx/firmware_nuttx
