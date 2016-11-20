@@ -94,4 +94,8 @@ ifneq (,$(findstring y,$(CONFIG_SAMV7_DAC0) $(CONFIG_SAMV7_DAC1)))
 CSRCS += sam_dac.c
 endif
 
+ifeq ($(CONFIG_RTC),y)
+CSRCS += sam_rtc.c
+endif
+
 include $(TOPDIR)/configs/Board.mk
