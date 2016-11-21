@@ -39,10 +39,12 @@
 
 #pragma once
 
+#if 0 //ZSK
 #ifdef __cplusplus
 #include <cwchar>
 #else
 #include <wchar.h>
+#endif
 #endif
 
 #include <px4_log.h>

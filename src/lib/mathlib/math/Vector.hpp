@@ -44,7 +44,9 @@
 #define VECTOR_HPP
 
 #include <stdio.h>
+#if 0 //ZSK
 #include <cwchar>
+#endif
 #include <math.h>
 #include <string.h>
 
