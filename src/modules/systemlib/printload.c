@@ -254,12 +254,12 @@ void print_load(uint64_t t, int fd, struct print_load_s *print_state)
 			size_t stack_size = system_load.tasks[i].tcb->adj_stack_size;
 			ssize_t stack_free = 0;
 
+#if 0 //ZSK a hack for compilation of same70-xplained
 #if CONFIG_ARCH_INTERRUPTSTACK > 3
 
 			if (system_load.tasks[i].tcb->pid == 0) {
 				stack_size = (CONFIG_ARCH_INTERRUPTSTACK & ~3);
 				stack_free = up_check_intstack_remain();
-
 			} else {
 #endif
 				stack_free = up_check_tcbstack_remain(system_load.tasks[i].tcb);
@@ -267,7 +267,7 @@ void print_load(uint64_t t, int fd, struct print_load_s *print_state)
 			}
 
 #endif
-
+#endif
 			dprintf(fd, "%s%4d %*-s %8lld %2d.%03d %5u/%5u %3u (%3u) ",
 				clear_line,
 				system_load.tasks[i].tcb->pid,
