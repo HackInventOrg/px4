@@ -16,6 +16,7 @@ set(config_module_list
 	#
 	# System commands
 	#
+	systemcmds/minibl
 	systemcmds/bl_update
 	systemcmds/mixer
 	systemcmds/param
