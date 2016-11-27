@@ -19,6 +19,6 @@
 #===============================================================================
 
 [ -z "$(pidof openocd)" ] && \
-    sudo nuttx-configs/px4-same70xplained/tools/oocd.sh $PWD 
+    sudo nuttx-configs/px4-same70xplained/tools/oocd.sh $PWD 2>&1 >/dev/null
 
 cgdb -d arm-none-eabi-gdb -x nuttx-configs/px4-same70xplained/gdbinit

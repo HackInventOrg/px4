@@ -1,5 +1,24 @@
+define nn
+x/i $pc
+si
+end
+
+define skipvector
+while $pc != 0x400150
+nn
+end
+end
+
 target remote localhost:3333
-symbol-file build_px4-same70xplained_default/src/firmware/nuttx/firmware_nuttx 
+symbol-file build_px4-same70xplained_default/src/firmware/nuttx/firmware_nuttx
 monitor reset
 monitor halt
 load build_px4-same70xplained_default/src/firmware/nuttx/firmware_nuttx
+b __start
+#b os_start
+#b up_assert
+#b up_hardfault
+#b uart_open
+#b * 0x410878
+#b * 0x4090ae
+c
